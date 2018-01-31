@@ -1,4 +1,4 @@
-# Publishing Website using Angular and the Bulma CSS Framework
+# Bulma Publishing Website using Angular
 This Angular website was created using the project built in the book [Creating Interfaces with Bulma](https://bleedingedgepress.com/creating-interfaces-bulma/) written by **Jeremy Thomas**, the creator of Bulma, Oleksii Potiekhin, Mikko Lauhakari, Aslam Shah, and David Berning.  I was delighted to be a part of this book's development as a technical reviewer.  Bulma is a 100% responsive, CSS-only framework based on CSS Flexbox with simple syntax for easy integration into web design and development projects.
 
 <p align="center">
