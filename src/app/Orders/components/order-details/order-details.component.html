@@ -1,0 +1,92 @@
+<!-- Main Section -->
+<section class="section">
+  <div class="columns">
+
+    <!-- Sidebar Menu -->
+    <div class="column is-4-tablet is-3-desktop is-2-widescreen">
+      <app-sidebar [ordersLink]="true"></app-sidebar>
+    </div>
+
+    <!-- Page-Specific Content -->
+    <div class="column fadein">
+      
+      <!-- Breadcrumb -->
+      <nav class="breadcrumb">
+        <ul>
+          <li>
+            <a routerLink="/home/orders">Orders</a>
+          </li>
+          <li class="is-active">
+            <a>Order Details</a>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Order Information -->
+        <h1 class="subtitle is-3">
+          <span class="has-text-grey-light">Order</span> <strong>#{{ order.orderNumber }}</strong>
+        </h1>
+        <div class="columns is-desktop">
+
+          <!-- Date, Status, and Customer Information -->
+          <div class="column is-4-dekstop is-3-widescreen">
+            <p class="heading"><strong>Date</strong></p>
+            <p class="content">{{ order.date }}</p>
+
+            <p class="heading"><strong>Status</strong></p>
+            <div class="buttons">
+              <button class="button is-small is-success ignore" *ngIf="order.status === 'Successful'">Successful</button>
+              <button class="button is-small is-success is-outlined ignore" *ngIf="!(order.status === 'Successful')">Successful</button>
+              <button class="button is-small is-warning ignore" *ngIf="order.status === 'In Progress'">In progress</button>
+              <button class="button is-small is-warning is-outlined ignore" *ngIf="!(order.status === 'In Progress')">In progress</button>
+              <button class="button is-small is-danger ignore" *ngIf="order.status === 'Failed'">Failed</button>
+              <button class="button is-small is-danger is-outlined ignore" *ngIf="!(order.status === 'Failed')">Failed</button>
+            </div>
+
+            <p class="heading"><strong>Customer</strong></p>
+            <p class="content">
+              <strong><a [routerLink]="'/home/customers/edit-customer/'+id">{{ order.customer }}</a></strong><br>
+              <code *ngIf="order.email">{{ order.email }}</code><br>{{ order.address }}<br>
+              <span *ngIf="order.address2">{{ order.address2 }}<br></span><span *ngIf="order.city">{{ order.city }}, </span>
+              <span *ngIf="order.province">{{ order.province }}</span><span *ngIf="order.state">{{ order.state }}</span> 
+              {{ order.zipcode }}<br>{{ order.country }}
+            </p>
+          </div>
+
+          <!-- List of Books and Row Form -->
+          <div class="column">
+            <p class="heading"><strong>Books</strong></p>
+            <table class="table is-bordered is-fullwidth">
+              <thead>
+                <tr>
+                  <th class="is-narrow">Cover</th>
+                  <th>Title</th>
+                  <th class="has-text-right is-narrow">Price</th>
+                  <th class="has-text-right is-narrow">Amount</th>
+                  <th class="has-text-right is-narrow">Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let book of order.books; let i = index">
+                  <td><img src="{{ book.imageURL }}" width="40"></td>
+                  <td><a [routerLink]="'/home/books/edit-book/'+i"><strong>{{ book.title }}</strong></a></td>
+                  <td class="has-text-right">${{ book.price }}</td>
+                  <td class="has-text-right">1</td>
+                  <td class="has-text-right">$22.99</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th colspan="5" class="has-text-right">{{ order.books[0].price * order.books.length }}</th>
+                </tr>
+              </tfoot>
+            </table>
+
+          </div>
+
+        </div>
+
+    </div>
+
+  </div>
+</section>

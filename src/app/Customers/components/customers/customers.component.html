@@ -1,0 +1,146 @@
+<!-- Main Section -->
+<section class="section">
+  <div class="columns">
+
+    <!-- Sidebar Menu -->
+    <div class="column is-4-tablet is-3-desktop is-2-widescreen">
+      <app-sidebar [customersLink]="true"></app-sidebar>
+    </div>
+
+    <!-- Page-Specific Content -->
+    <div class="column fadein">
+      <h1 class="title">Customers</h1>
+
+      <!-- Toolbar -->
+      <app-toolbar 
+        [setCustomer]="true"
+        [customers]="customers"
+        [disableOrder]="true"
+        [queryObject]="'Name'"
+        (customersOut)="addCustomer($event)"
+        (customersFilterOut)="findCustomer($event)">
+      </app-toolbar><br>
+
+      <!-- List of Customers -->
+      <table class="table is-hoverable is-fullwidth">
+        <thead>
+          <tr>
+            <th>
+              <span [ngSwitch]="nameSwitch">
+                <span class="pointer" *ngSwitchCase="'asc'" (click)="sortBy('name', 'des', '', '', '')">Name <i class="fa fa-sort-asc" aria-hidden="true"></i></span>
+                <span class="pointer" *ngSwitchCase="'des'" (click)="sortBy('name', 'asc', '', '', '')">Name <i class="fa fa-sort-desc" aria-hidden="true"></i></span>
+                <span class="pointer" *ngSwitchDefault (click)="sortBy('name', 'asc', '', '', '')">Name</span>
+              </span>
+            </th>
+            <th>
+              <span [ngSwitch]="emailSwitch">
+                <span class="pointer" *ngSwitchCase="'asc'" (click)="sortBy('email', '', 'des', '', '')">Email <i class="fa fa-sort-asc" aria-hidden="true"></i></span>
+                <span class="pointer" *ngSwitchCase="'des'" (click)="sortBy('email', '', 'asc', '', '')">Email <i class="fa fa-sort-desc" aria-hidden="true"></i></span>
+                <span class="pointer" *ngSwitchDefault (click)="sortBy('email', '', 'asc', '', '')">Email</span>
+              </span>
+            </th>
+            <th>
+              <span [ngSwitch]="countrySwitch">
+                <span class="pointer" *ngSwitchCase="'asc'" (click)="sortBy('country', '', '', 'des', '')">Country <i class="fa fa-sort-asc" aria-hidden="true"></i></span>
+                <span class="pointer" *ngSwitchCase="'des'" (click)="sortBy('country', '', '', 'asc', '')">Country <i class="fa fa-sort-desc" aria-hidden="true"></i></span>
+                <span class="pointer" *ngSwitchDefault (click)="sortBy('country', '', '', 'asc', '')">Country</span>
+              </span>
+            </th>
+            <th>
+              <span [ngSwitch]="ordersSwitch">
+                <span class="pointer" *ngSwitchCase="'asc'" (click)="sortBy('totalOrders', '', '', '', 'des')">Orders <i class="fa fa-sort-asc" aria-hidden="true"></i></span>
+                <span class="pointer" *ngSwitchCase="'des'" (click)="sortBy('totalOrders', '', '', '', 'asc')">Orders <i class="fa fa-sort-desc" aria-hidden="true"></i></span>
+                <span class="pointer" *ngSwitchDefault (click)="sortBy('totalOrders', '', '', '', 'asc')">Orders</span>
+              </span>
+            </th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let customer of pagedItems; let i = index">
+            <td><a [routerLink]="'edit-customer/'+i"><strong>{{ customer.name }}</strong></a></td>
+            <td><code>{{ customer.email }}</code></td>
+            <td>{{ customer.country }}</td>
+            <td>{{ customer.totalOrders }}</td>
+            <td>
+              <div class="buttons">
+                <a [routerLink]="'edit-customer/'+i" class="button is-small">Edit</a>
+                <a class="button is-small" data-target="customer" (click)="toggleDelete(customer)">Delete</a>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <th>
+              <span [ngSwitch]="nameSwitch">
+                <span class="pointer" *ngSwitchCase="'asc'" (click)="sortBy('name', 'des', '', '')">Name <i class="fa fa-sort-asc" aria-hidden="true"></i></span>
+                <span class="pointer" *ngSwitchCase="'des'" (click)="sortBy('name', 'asc', '', '')">Name <i class="fa fa-sort-desc" aria-hidden="true"></i></span>
+                <span class="pointer" *ngSwitchDefault (click)="sortBy('name', 'asc', '', '')">Name</span>
+              </span>
+            </th>
+            <th>
+              <span [ngSwitch]="emailSwitch">
+                <span class="pointer" *ngSwitchCase="'asc'" (click)="sortBy('email', '', 'des', '')">Email <i class="fa fa-sort-asc" aria-hidden="true"></i></span>
+                <span class="pointer" *ngSwitchCase="'des'" (click)="sortBy('email', '', 'asc', '')">Email <i class="fa fa-sort-desc" aria-hidden="true"></i></span>
+                <span class="pointer" *ngSwitchDefault (click)="sortBy('email', '', 'asc', '')">Email</span>
+              </span>
+            </th>
+            <th>
+              <span [ngSwitch]="countrySwitch">
+                <span class="pointer" *ngSwitchCase="'asc'" (click)="sortBy('country', '', '', 'des')">Country <i class="fa fa-sort-asc" aria-hidden="true"></i></span>
+                <span class="pointer" *ngSwitchCase="'des'" (click)="sortBy('country', '', '', 'asc')">Country <i class="fa fa-sort-desc" aria-hidden="true"></i></span>
+                <span class="pointer" *ngSwitchDefault (click)="sortBy('country', '', '', 'asc')">Country</span>
+              </span>
+            </th>
+            <th>
+              <span [ngSwitch]="ordersSwitch">
+                <span class="pointer" *ngSwitchCase="'asc'" (click)="sortBy('totalOrders', '', '', '', 'des')">Orders <i class="fa fa-sort-asc" aria-hidden="true"></i></span>
+                <span class="pointer" *ngSwitchCase="'des'" (click)="sortBy('totalOrders', '', '', '', 'asc')">Orders <i class="fa fa-sort-desc" aria-hidden="true"></i></span>
+                <span class="pointer" *ngSwitchDefault (click)="sortBy('totalOrders', '', '', '', 'asc')">Orders</span>
+              </span>
+            </th>
+            <th>Actions</th>
+          </tr>
+        </tfoot>
+      </table>
+
+      <!-- Pagination -->
+      <app-pagination [allItems]="customers" (pagedItemsOut)="showCustomers($event)"></app-pagination>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- Confirm Delete Modal -->
+<div class="modal" [class.is-active]="deleteSwitch" id="customer">
+  <div class="modal-background" (click)="toggleDelete(customer)"></div>
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <p class="modal-card-title">Confirm Delete</p>
+      <a class="delete" aria-label="close" (click)="toggleDelete(customer)"></a>
+    </header>
+    <section class="modal-card-body">
+      <article class="media">
+        <aside class="media-left">
+          <img src="{{ customerToDelete?.imageURL }}" width="110">
+        </aside>
+        <div class="media-content">
+          <h2 class="subtitle has-text-centered">
+            Are you sure you want to delete
+            <br>
+            <br>
+            <strong>
+              <em>{{ customerToDelete?.name }}</em>
+            </strong>?
+          </h2>
+        </div>
+      </article>
+    </section>
+    <footer class="modal-card-foot">
+      <button class="button is-success" (click)="deleteCustomer()">Yes</button>
+      <button class="button" (click)="toggleDelete(customer)">No</button>
+    </footer>
+  </div>
+</div>

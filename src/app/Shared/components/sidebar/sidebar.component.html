@@ -1,0 +1,36 @@
+<nav class="menu">
+  <p class="menu-label">Menu</p>
+  <ul class="menu-list">
+    <li>
+      <a [class.is-active]="dashboardLink" routerLink="/home">
+        <span class="icon">
+          <i class="fa fa-tachometer"></i>
+        </span> Dashboard
+      </a>
+    </li>
+    <li>
+      <a [class.is-active]="booksLink" routerLink="/home/books">
+        <span class="icon">
+          <i class="fa fa-book"></i>
+        </span> Books
+      </a>
+    </li>
+    <li>
+      <a [class.is-active]="customersLink" routerLink="/home/customers">
+        <span class="icon">
+          <i class="fa fa-address-book"></i>
+        </span> Customers
+      </a>
+    </li>
+    <li>
+      <a [class.is-active]="ordersLink" routerLink="/home/orders">
+        <span class="icon">
+          <i class="fa fa-file-text-o"></i>
+        </span> Orders
+      </a>
+    </li>
+  </ul>
+</nav>
+
+
+

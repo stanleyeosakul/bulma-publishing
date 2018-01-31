@@ -1,0 +1,79 @@
+<!-- Main Section -->
+<section class="section">
+  <div class="columns">
+
+    <!-- Sidebar Menu -->
+    <div class="column is-4-tablet is-3-desktop is-2-widescreen">
+      <app-sidebar [booksLink]="true"></app-sidebar>
+    </div>
+
+    <!-- Page-Specific Content -->
+    <div class="column fadein">
+      <h1 class="title">Books</h1>
+
+      <!-- Toolbar -->
+      <app-toolbar 
+        [setBook]="true" 
+        [books]="books" 
+        [queryObject]="'Book Title'" 
+        (booksOut)="updateBook($event)"
+        (booksSortOut)="updateBook($event)"
+        (booksFilterOut)="updateBook($event)">
+      </app-toolbar><br>
+
+      <!-- List of Books -->
+      <div class="columns is-multiline">
+        <div class="column is-12-tablet is-6-desktop is-4-widescreen" *ngFor="let book of pagedItems; let i = index">
+          <article class="box">
+            <div class="media">
+              <aside class="media-left"><img src="{{ book.imageURL }}" width="110"></aside>
+              <div class="media-content">
+                <p class="title is-5 is-spaced is-marginless">
+                  <a [routerLink]="'edit-book/'+i">{{ book.title }}</a>
+                </p>
+                <p class="subtitle is-marginless">${{ book.price }}</p>
+                <div class="content is-small">
+                  {{ book.pageCount }} pages<br>ISBN: {{ book.isbn }}<br>
+                  <a [routerLink]="'edit-book/'+i">Edit</a><span> | </span>
+                  <a data-target="book" (click)="toggleDelete(book)">Delete</a>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <!-- Pagination -->
+      <app-pagination [allItems]="books" (pagedItemsOut)="showBooks($event)"></app-pagination>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- Confirm Delete Modal -->
+<div class="modal" [class.is-active]="deleteSwitch" id="book">
+  <div class="modal-background" (click)="toggleDelete(book)"></div>
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <p class="modal-card-title">Confirm Delete</p>
+      <a class="delete" aria-label="close" (click)="toggleDelete(book)"></a>
+    </header>
+    <section class="modal-card-body">
+      <article class="media">
+        <aside class="media-left">
+          <img src="{{ bookToDelete?.imageURL }}" width="110">
+        </aside>
+        <div class="media-content">
+          <h2 class="subtitle has-text-centered">
+            Are you sure you want to delete<br><br><strong><em>{{ bookToDelete?.title }}</em></strong>?
+          </h2>
+        </div>
+      </article>
+    </section>
+    <footer class="modal-card-foot">
+      <button class="button is-success" (click)="deleteBook()">Yes</button>
+      <button class="button" (click)="toggleDelete(book)">No</button>
+    </footer>
+  </div>
+</div>

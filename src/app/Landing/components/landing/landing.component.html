@@ -1,0 +1,61 @@
+<section class="hero is-primary is-fullheight">
+  <div class="hero-body">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-6-tablet is-4-desktop is-3-widescreen">
+
+          <!-- Username/Password validation notification -->
+          <div class="notification is-danger" *ngIf="errSwitch">
+            <button class="delete" (click)="hideError()"></button>{{ errMsg }}
+          </div>
+          
+          <!-- Login Form -->
+          <form #loginForm="ngForm" class="box fadein" (ngSubmit)="onSubmit()">
+
+            <!-- Form Image -->
+            <div class="field has-text-centered">
+              <img src="../assets/images/logo-bep.png" width="315">
+            </div>
+
+            <!-- Email -->
+            <div class="field">
+              <label for="email" class="label">Email<sup class="red">*</sup></label>
+              <div class="control has-icons-left">
+                <input class="input" type="email" name="email" id="email" [(ngModel)]="user.email" placeholder="e.g. alexjohnson@gmail.com" required>
+                <span class="icon is-small is-left">
+                  <i class="fa fa-envelope"></i>
+                </span>
+              </div>
+            </div>
+
+            <!-- Password -->
+            <div class="field">
+              <label for="password" class="label">Password<sup class="red">*</sup></label>
+              <div class="control has-icons-left">
+                <input class="input" type="password" name="password" id="password" [(ngModel)]="user.password" placeholder="********" required>
+                <span class="icon is-small is-left">
+                  <i class="fa fa-lock"></i>
+                </span>
+              </div>
+            </div>
+
+            <!-- Checkbox -->
+            <div class="field">
+              <label class="checkbox">
+                <input type="checkbox" name="rememberMe" [(ngModel)]="user.rememberMe"> Remember Me
+              </label>
+            </div>
+
+            <!-- Login Button -->
+            <div class="field has-text-centered">
+              <button class="button is-success" [disabled]="!loginForm.valid">Login</button>
+              <a class="button is-link" routerLink="/home">Bypass Login</a>
+            </div>
+
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,118 @@
+<!-- Navbar -->
+<nav class="navbar has-shadow">
+  <div class="navbar-brand">
+    <a class="navbar-item" href="https://bleedingedgepress.com/creating-interfaces-bulma" target="_blank">
+      <img src="../assets/images/logo-bep.png">
+    </a>
+    <div class="navbar-burger" [class.is-active]="burgerSwitch" (click)="toggleBurger()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+  <div class="navbar-menu" [class.is-active]="burgerSwitch">
+    <div class="navbar-start">
+      <div class="navbar-item">
+        <small>Publishing at the speed of technology</small>
+      </div>
+    </div>
+    <div class="navbar-end">
+      <a class="navbar-item" href="https://bulma.io" target="_blank">
+        <img src="../../assets/images/bulma.png">
+      </a>
+      <div class="navbar-item has-dropdown" [class.is-active]="dropdownSwitch" (click)="toggleDropdown()">
+        <div class="navbar-link">{{ user.name }}</div>
+        <div class="navbar-dropdown">
+          <a class="navbar-item">
+            <div data-target="profile" (click)="toggleProfile()">
+              <span class="icon is-small">
+                <i class="fa fa-user-circle-o"></i>
+              </span> Profile
+            </div>
+          </a>
+          <a class="navbar-item">
+            <div data-target="report-a-bug" (click)="toggleReportBug()">
+              <span class="icon is-small">
+                <i class="fa fa-bug"></i>
+              </span> Report bug
+            </div>
+          </a>
+          <a class="navbar-item">
+            <div (click)="logout()">
+              <span class="icon is-small">
+                <i class="fa fa-sign-out"></i>
+              </span> Sign Out
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- Profile Modal -->
+<div class="modal" [class.is-active]="profileSwitch" id="profile">
+  <div class="modal-background" (click)="toggleProfile()"></div>
+  <div class="modal-card">
+    <form #profileForm="ngForm" (ngSubmit)="toggleProfile()">
+      <header class="modal-card-head">
+        <p class="modal-card-title">Profile</p>
+        <a class="delete" aria-label="close" (click)="toggleProfile()"></a>
+      </header>
+      <section class="modal-card-body">
+
+        <!-- Body Content -->
+        <h2 class="subtitle has-text-centered">This is your profile!  Changes are saved automatically.</h2>
+
+        <!-- Name -->
+        <div class="field">
+          <label for="name" class="label">Name</label>
+          <div class="control has-icons-left">
+            <input class="input" type="name" name="name" id="name" [(ngModel)]="user.name" placeholder="Alex Johnson" required>
+            <span class="icon is-small is-left"><i class="fa fa-user-circle-o"></i></span>
+          </div>
+        </div>
+
+        <!-- Email -->
+        <div class="field">
+          <label for="email" class="label">Email</label>
+          <div class="control has-icons-left">
+            <input class="input" type="email" name="email" id="email" [(ngModel)]="user.email" placeholder="alexjohnson@gmail.com" required>
+            <span class="icon is-small is-left"><i class="fa fa-envelope"></i></span>
+          </div>
+        </div>
+        
+      </section>
+      <footer class="modal-card-foot">
+        <button class="button" [disabled]="!profileForm.valid">Back</button>
+      </footer>
+    </form>
+  </div>
+</div>
+
+<!-- Report a Bug Modal -->
+  <div class="modal" [class.is-active]="bugSwitch" id="report-a-bug">
+    <div class="modal-background" (click)="toggleReportBug()"></div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">Report a Bug</p>
+        <button class="delete" aria-label="close" (click)="toggleReportBug()"></button>
+      </header>
+      <section class="modal-card-body">
+
+        <!-- Notification Element -->
+        <div class="notification is-success" aria-hidden="true" *ngIf="bugSuccessSwitch">
+          <i class="fa fa-bug"></i> Thank You. Your bug has been reported.
+        </div>
+
+        <!-- Body Content -->
+        <textarea class="textarea" placeholder="Let us know what problems you faced"></textarea>
+        
+      </section>
+  
+      <footer class="modal-card-foot">
+        <button class="button is-success" (click)="showBugNotification()" [disabled]="disableBugSubmit">Send</button>
+        <button class="button" (click)="toggleReportBug()">Cancel</button>
+      </footer>
+    </div>
+  </div>

@@ -1,0 +1,147 @@
+<!-- Main Section -->
+<section class="section">
+  <div class="columns">
+
+    <!-- Sidebar Menu -->
+    <div class="column is-4-tablet is-3-desktop is-2-widescreen">
+      <app-sidebar [dashboardLink]="true"></app-sidebar>
+    </div>
+
+    <!-- Page-Specific Content -->
+    <div class="column fadein">
+
+      <!-- Welcome and Timeframe -->
+      <div class="level">
+        <div class="level-left"><h1 class="title">Welome to your Dashboard</h1></div>
+        <div class="level-right">
+          <div class="select">
+            <select #time (change)="updateStats(time)">
+              <option value="today">Today</option>
+              <option value="yesterday">Yesterday</option>
+              <option value="week">This Week</option>
+              <option value="month">This Month</option>
+              <option value="year">This Year</option>
+              <option  value="all"selected>All time</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Metrics -->
+      <div class="columns is-multiline">
+
+        <!-- Orders -->
+        <div class="column is-12-tablet is-6-desktop is-3-widescreen">
+          <div class="notification is-link has-text">
+            <p class="title is-1">{{ stats.orders }}</p>
+            <p class="subtitle is-4">Orders</p>
+          </div>
+        </div>
+
+        <!-- Revenue -->
+        <div class="column is-12-tablet is-6-desktop is-3-widescreen">
+          <div class="notification is-info has-text">
+            <p class="title is-1">${{ stats.revenue }}</p>
+            <p class="subtitle is-4">Revenue</p>
+          </div>
+        </div>
+
+        <!-- Visitors -->
+        <div class="column is-12-tablet is-6-desktop is-3-widescreen">
+          <div class="notification is-primary has-text">
+            <p class="title is-1">{{ stats.visitors }}</p>
+            <p class="subtitle is-4">Visitors</p>
+          </div>
+        </div>
+
+        <!-- Pageviews -->
+        <div class="column is-12-tablet is-6-desktop is-3-widescreen">
+          <div class="notification is-success has-text">
+            <p class="title is-1">{{ stats.pageViews }}</p>
+            <p class="subtitle is-4">Pageviews</p>
+          </div>
+        </div>
+
+        <!-- Most Popular Books -->
+        <div class="column is-12-tablet is-6-desktop is-4-fullhd">
+          <div class="card">
+            <div class="card-content">
+              <h2 class="title is-4">Most popular books</h2>
+              <div class="media" *ngFor="let popularBook of popularBooks; let i = index">
+                <div class="media-left is-marginless">
+                  <p class="number">{{ i + 1 }}</p>
+                </div>
+                <div class="media-left">
+                  <img src="{{ popularBook.imageURL }}" width="40">
+                </div>
+                <div class="media-content is-clipped">
+                  <p class="title is-5 is-spaced is-marginless">
+                    <a [routerLink]="'/home/books/edit-book/'+i">{{ popularBook.title }}</a>
+                  </p>
+                </div>
+                <div class="media-right">{{ popularBook.numSold }} sold</div>
+              </div>
+              <a routerLink="/home/books" class="button is-link is-outlined">View all books</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Most Loyal Customers -->
+        <div class="column is-12-tablet is-6-desktop is-4-fullhd">
+          <div class="card">
+            <div class="card-content">
+              <h2 class="title is-4">Most loyal customers</h2>
+              <div class="media" *ngFor="let loyalCustomer of loyalCustomers; let i = index">
+                <div class="media-left is-marginless">
+                  <p class="number">{{ i + 1 }}</p>
+                </div>
+                <div class="media-content is-clipped">
+                  <p class="title is-5 is-spaced is-marginless">
+                    <a [routerLink]="'/home/customers/edit-customer/'+i">{{ loyalCustomer.name }}</a>
+                  </p>
+                  <p class="subtitle is-6">{{ loyalCustomer.country }}</p>
+                </div>
+                <div class="media-right">{{ loyalCustomer.totalOrders }} orders</div>
+              </div>
+              <a routerLink="/home/customers" class="button is-link is-outlined">View all customers</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Latest Orders -->
+        <div class="column is-12-tablet is-6-desktop is-4-fullhd">
+          <div class="card">
+            <div class="card-content">
+              <h2 class="title is-4">Latest orders</h2>
+              <div class="level" *ngFor="let latestOrder of latestOrders; let i = index">
+                <div class="level-left">
+                  <div class="is-clipped">
+                    <p class="title is-5 is-marginless">
+                      <a [routerLink]="'/home/orders/edit-order/'+i">{{ latestOrder.orderNumber }}</a>
+                    </p>
+                    <small>
+                      {{ latestOrder.date }} by
+                      <a [routerLink]="'/home/customers/edit-customer/'+i">{{ latestOrder.customer }}</a>
+                    </small>
+                  </div>
+                </div>
+                <div class="level-right">
+                  <div class="has-text-right">
+                    <p class="title is-5 is-marginless">${{ latestOrder.total }}</p>
+                    <span class="tag is-success" *ngIf="latestOrder.status === 'Successful'">{{ latestOrder.status }}</span>
+                    <span class="tag is-warning" *ngIf="latestOrder.status === 'In Progress'">{{ latestOrder.status }}</span>
+                    <span class="tag is-danger" *ngIf="latestOrder.status === 'Failed'">{{ latestOrder.status }}</span>
+                  </div>
+                </div>
+              </div>
+              <a routerLink="/home/orders" class="button is-link is-outlined">View all orders</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</section>

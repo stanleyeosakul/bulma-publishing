@@ -1,0 +1,166 @@
+<!-- Main Section -->
+<section class="section">
+  <div class="columns">
+
+    <!-- Sidebar Menu -->
+    <div class="column is-4-tablet is-3-desktop is-2-widescreen">
+      <app-sidebar [ordersLink]="true"></app-sidebar>
+    </div>
+
+    <!-- Page-Specific Content -->
+    <div class="column fadein">
+      <h1 class="title">Orders</h1>
+
+      <!-- Toolbar -->
+      <app-toolbar 
+        [setOrder]="true"
+        [orders]="orders"
+        [disableOrder]="true"
+        [disableNew]="true"
+        [queryObject]="'Order #'"
+        (ordersOut)="addOrder($event)"
+        (ordersFilterOut)="findOrder($event)">
+      </app-toolbar><br>
+
+      <!-- Table of Orders -->
+      <table class="table is-hoverable is-fullwidth">
+        <thead>
+          <tr>
+            <th>
+              <span [ngSwitch]="orderNumSwitch">
+                <span class="pointer" *ngSwitchCase="'asc'" (click)="sortBy('orderNum', 'des', '', '', '', '', '')">Order # <i class="fa fa-sort-asc" aria-hidden="true"></i></span>
+                <span class="pointer" *ngSwitchCase="'des'" (click)="sortBy('orderNum', 'asc', '', '', '', '', '')">Order # <i class="fa fa-sort-desc" aria-hidden="true"></i></span>
+                <span class="pointer" *ngSwitchDefault (click)="sortBy('orderNum', 'asc', '', '', '', '', '')">Order #</span>
+              </span>
+            </th>
+            <th>
+              <span [ngSwitch]="customerSwitch">
+                <span class="pointer" *ngSwitchCase="'asc'" (click)="sortBy('customer', '', 'des', '', '', '', '')">Customer <i class="fa fa-sort-asc" aria-hidden="true"></i></span>
+                <span class="pointer" *ngSwitchCase="'des'" (click)="sortBy('customer', '', 'asc', '', '', '', '')">Customer <i class="fa fa-sort-desc" aria-hidden="true"></i></span>
+                <span class="pointer" *ngSwitchDefault (click)="sortBy('customer', '', 'asc', '', '', '', '')">Customer</span>
+              </span>
+            </th>
+            <th>
+              <span [ngSwitch]="dateSwitch">
+                <span class="pointer" *ngSwitchCase="'asc'" (click)="sortBy('date', '', '', 'des', '', '', '')">Date <i class="fa fa-sort-asc" aria-hidden="true"></i></span>
+                <span class="pointer" *ngSwitchCase="'des'" (click)="sortBy('date', '', '', 'asc', '', '', '')">Date <i class="fa fa-sort-desc" aria-hidden="true"></i></span>
+                <span class="pointer" *ngSwitchDefault (click)="sortBy('date', '', '', 'asc', '', '', '')">Date</span>
+              </span>
+            </th>
+            <th>
+              <span [ngSwitch]="totalBooksSwitch">
+                <span class="pointer" *ngSwitchCase="'asc'" (click)="sortBy('totalBooks', '', '', '', 'des', '', '')">Books <i class="fa fa-sort-asc" aria-hidden="true"></i></span>
+                <span class="pointer" *ngSwitchCase="'des'" (click)="sortBy('totalBooks', '', '', '', 'asc', '', '')">Books <i class="fa fa-sort-desc" aria-hidden="true"></i></span>
+                <span class="pointer" *ngSwitchDefault (click)="sortBy('totalBooks', '', '', '', 'asc', '', '')">Books</span>
+              </span>
+            </th>
+            <th>
+              <span [ngSwitch]="statusSwitch">
+                <span class="pointer" *ngSwitchCase="'asc'" (click)="sortBy('status', '', '', '', '', 'des', '')">Status <i class="fa fa-sort-asc" aria-hidden="true"></i></span>
+                <span class="pointer" *ngSwitchCase="'des'" (click)="sortBy('status', '', '', '', '', 'asc', '')">Status <i class="fa fa-sort-desc" aria-hidden="true"></i></span>
+                <span class="pointer" *ngSwitchDefault (click)="sortBy('status', '', '', '', '', 'asc', '')">Status</span>
+              </span>
+            </th>
+            <th class="has-text-right">
+              <span [ngSwitch]="totalSwitch">
+                <span class="pointer" *ngSwitchCase="'asc'" (click)="sortBy('total', '', '', '', '', '', 'des')">Total <i class="fa fa-sort-asc" aria-hidden="true"></i></span>
+                <span class="pointer" *ngSwitchCase="'des'" (click)="sortBy('total', '', '', '', '', '', 'asc')">Total <i class="fa fa-sort-desc" aria-hidden="true"></i></span>
+                <span class="pointer" *ngSwitchDefault (click)="sortBy('total', '', '', '', '', '', 'asc')">Total</span>
+              </span>
+            </th>
+          </tr>
+        </thead>
+        <tfoot>
+          <tr>
+            <th>
+              <span [ngSwitch]="orderNumSwitch">
+                <span class="pointer" *ngSwitchCase="'asc'" (click)="sortBy('orderNumber', 'des', '', '', '', '', '')">Order #
+                  <i class="fa fa-sort-asc" aria-hidden="true"></i>
+                </span>
+                <span class="pointer" *ngSwitchCase="'des'" (click)="sortBy('orderNumber', 'asc', '', '', '', '', '')">Order #
+                  <i class="fa fa-sort-desc" aria-hidden="true"></i>
+                </span>
+                <span class="pointer" *ngSwitchDefault (click)="sortBy('orderNumber', 'asc', '', '', '', '', '')">Order #</span>
+              </span>
+            </th>
+            <th>
+              <span [ngSwitch]="customerSwitch">
+                <span class="pointer" *ngSwitchCase="'asc'" (click)="sortBy('customer', '', 'des', '', '', '', '')">Customer
+                  <i class="fa fa-sort-asc" aria-hidden="true"></i>
+                </span>
+                <span class="pointer" *ngSwitchCase="'des'" (click)="sortBy('customer', '', 'asc', '', '', '', '')">Customer
+                  <i class="fa fa-sort-desc" aria-hidden="true"></i>
+                </span>
+                <span class="pointer" *ngSwitchDefault (click)="sortBy('customer', '', 'asc', '', '', '', '')">Customer</span>
+              </span>
+            </th>
+            <th>
+              <span [ngSwitch]="dateSwitch">
+                <span class="pointer" *ngSwitchCase="'asc'" (click)="sortBy('date', '', '', 'des', '', '', '')">Date
+                  <i class="fa fa-sort-asc" aria-hidden="true"></i>
+                </span>
+                <span class="pointer" *ngSwitchCase="'des'" (click)="sortBy('date', '', '', 'asc', '', '', '')">Date
+                  <i class="fa fa-sort-desc" aria-hidden="true"></i>
+                </span>
+                <span class="pointer" *ngSwitchDefault (click)="sortBy('date', '', '', 'asc', '', '', '')">Date</span>
+              </span>
+            </th>
+            <th>
+              <span [ngSwitch]="totalBooksSwitch">
+                <span class="pointer" *ngSwitchCase="'asc'" (click)="sortBy('totalBooks', '', '', '', 'des', '', '')">Books
+                  <i class="fa fa-sort-asc" aria-hidden="true"></i>
+                </span>
+                <span class="pointer" *ngSwitchCase="'des'" (click)="sortBy('totalBooks', '', '', '', 'asc', '', '')">Books
+                  <i class="fa fa-sort-desc" aria-hidden="true"></i>
+                </span>
+                <span class="pointer" *ngSwitchDefault (click)="sortBy('totalBooks', '', '', '', 'asc', '', '')">Books</span>
+              </span>
+            </th>
+            <th>
+              <span [ngSwitch]="statusSwitch">
+                <span class="pointer" *ngSwitchCase="'asc'" (click)="sortBy('status', '', '', '', '', 'des', '')">Status
+                  <i class="fa fa-sort-asc" aria-hidden="true"></i>
+                </span>
+                <span class="pointer" *ngSwitchCase="'des'" (click)="sortBy('status', '', '', '', '', 'asc', '')">Status
+                  <i class="fa fa-sort-desc" aria-hidden="true"></i>
+                </span>
+                <span class="pointer" *ngSwitchDefault (click)="sortBy('status', '', '', '', '', 'asc', '')">Status</span>
+              </span>
+            </th>
+            <th class="has-text-right">
+              <span [ngSwitch]="totalSwitch">
+                <span class="pointer" *ngSwitchCase="'asc'" (click)="sortBy('total', '', '', '', '', '', 'des')">Total
+                  <i class="fa fa-sort-asc" aria-hidden="true"></i>
+                </span>
+                <span class="pointer" *ngSwitchCase="'des'" (click)="sortBy('total', '', '', '', '', '', 'asc')">Total
+                  <i class="fa fa-sort-desc" aria-hidden="true"></i>
+                </span>
+                <span class="pointer" *ngSwitchDefault (click)="sortBy('total', '', '', '', '', '', 'asc')">Total</span>
+              </span>
+            </th>
+          </tr>
+        </tfoot>
+        <tbody>
+          <tr *ngFor="let order of pagedItems; let i = index">
+            <td>
+              <a [routerLink]="'/home/orders/edit-order/'+i"><strong>{{ order.orderNumber }}</strong></a>
+            </td>
+            <td>
+              <a [routerLink]="'/home/customers/edit-customer/'+i">{{ order.customer }}</a>
+            </td>
+              <td>{{ order.date }}</td>
+              <td>{{ order.totalBooks }}</td>
+              <td *ngIf="order.status === 'Successful'"><span class="tag is-success">{{ order.status }}</span></td>
+              <td *ngIf="order.status === 'In Progress'"><span class="tag is-warning">{{ order.status }}</span></td>
+              <td *ngIf="order.status === 'Failed'"><span class="tag is-danger">{{ order.status }}</span></td>
+              <td class="has-text-right">${{ order.total | number:'0.2'}}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Pagination -->
+      <app-pagination [allItems]="orders" (pagedItemsOut)="showOrders($event)"></app-pagination>
+    
+    </div>
+  </div>
+</section>

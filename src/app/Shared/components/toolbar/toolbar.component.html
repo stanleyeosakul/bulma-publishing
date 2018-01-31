@@ -1,0 +1,46 @@
+<nav class="level">
+  <div class="level-left">
+
+    <!-- Number of items displayed -->
+    <div class="level-item">
+      <p class="subtitle is-5">
+        <span *ngIf="setBook"><strong>{{ books.length }}</strong> books</span>
+        <span *ngIf="setCustomer"><strong>{{ customers.length }}</strong> customers</span>
+        <span *ngIf="setOrder"><strong>{{ orders.length }}</strong> orders</span>
+      </p>
+    </div>
+
+    <!-- Add Buttons -->
+    <p class="level-item">
+      <a routerLink="new-book" class="button is-success" *ngIf="!disableNew && setBook">New</a>
+      <a routerLink="new-customer" class="button is-success" *ngIf="!disableNew && setCustomer">New</a>
+    </p>
+    <p class="level-item">
+      <button class="button is-link" (click)="quickAdd()">Quick Add</button>
+    </p>
+
+    <!-- Search Bar -->
+    <div class="level-item">
+      <div class="field has-addons">
+        <p class="control">
+          <input #query class="input" type="text" placeholder="Search all by {{ queryObject }}" (keyup)="filter(query.value)">
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Order Items -->
+  <div class="level-right" *ngIf="!disableOrder">
+    <div class="level-item">
+      <div class="level-item">Order by:</div>
+        <p class="level-item" *ngIf="!mostRecentSelected"><a (click)="orderByMostRecent()">Most Recent</a></p>
+        <p class="level-item" *ngIf="mostRecentSelected"><strong>Most Recent</strong></p>
+        <p class="level-item" *ngIf="!titleSelected"><a (click)="orderByTitle()">Title</a></p>
+        <p class="level-item" *ngIf="titleSelected"><strong>Title</strong></p>
+        <p class="level-item" *ngIf="!pageSelected"><a (click)="orderByPages()">Page Count</a></p>
+        <p class="level-item" *ngIf="pageSelected"><strong>Page Count</strong></p>
+        <p class="level-item" *ngIf="!isbnSelected"><a (click)="orderByIsbn()">ISBN</a></p>
+        <p class="level-item" *ngIf="isbnSelected"><strong>ISBN</strong></p>
+      </div>
+  </div>
+</nav>
