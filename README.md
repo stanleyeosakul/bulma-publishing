@@ -8,7 +8,7 @@ This Angular website was created using the project built in the book [Creating I
 </p>
 
 ## Versions Used
-* [Angular v5.2.2 (CLI v1.6.6)](https://github.com/angular/angular-cli/blob/master/README.md)
+* [Angular v5.2.3 (CLI v1.6.7)](https://github.com/angular/angular-cli/blob/master/README.md)
 * [Bulma CSS Framework v0.6.2](https://bulma.io/)
 
 ## Website Features
